@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FileListTableModel extends DefaultTableModel {
     private final Class[] columnClass = new Class[]{
-            String.class, Long.class, String.class, String.class, String.class, String.class
+            String.class, Long.class, String.class, String.class, Integer.class, String.class
     };
 
     public FileListTableModel(final Object[][] data, final Object[] columnNames) {

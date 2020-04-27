@@ -8,6 +8,7 @@ import com.vinberts.videoconverter.gui.actions.FileOpenAction;
 import com.vinberts.videoconverter.gui.helpers.ButtonColumn;
 import com.vinberts.videoconverter.gui.helpers.FileListTableModel;
 import com.vinberts.videoconverter.gui.helpers.MessageWithLink;
+import com.vinberts.videoconverter.gui.helpers.ProgressRenderer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,6 +21,7 @@ import java.awt.event.KeyEvent;
 import static com.vinberts.videoconverter.utils.Constants.ABOUT_TEXT;
 import static com.vinberts.videoconverter.utils.Constants.H265_MKV_1080P;
 import static com.vinberts.videoconverter.utils.Constants.H265_MKV_720P;
+import static com.vinberts.videoconverter.utils.Constants.MAX;
 
 /**
  *
@@ -101,9 +103,11 @@ public class VideoConverterForm extends JFrame {
                 ((DefaultTableModel) table.getModel()).removeRow(modelRow);
             }
         };
-        
+
         ButtonColumn buttonColumn = new ButtonColumn(fileListTable, delete, 5);
         buttonColumn.setMnemonic(KeyEvent.VK_R);
+
+        fileListTable.setDefaultRenderer(Integer.class, new ProgressRenderer(0, MAX));
 
         this.setJMenuBar(mainMenu);
 

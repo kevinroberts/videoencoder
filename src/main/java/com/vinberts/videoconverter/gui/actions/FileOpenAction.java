@@ -53,7 +53,7 @@ public class FileOpenAction implements ActionListener {
             while (t++ < files.length) {
                 File file = files[t - 1];
                 filesChosen.append(file.getAbsolutePath()).append(",");
-                model.addRow(new Object[]{file.getName(), 10L, "h.264", H265_MKV_1080P, "0 percent", "Remove"});
+                model.addRow(new Object[]{file.getName(), 10L, "h.264", H265_MKV_1080P, 0, "Remove"});
             }
 
             LOG.debug("User chose files: " + filesChosen.toString());
