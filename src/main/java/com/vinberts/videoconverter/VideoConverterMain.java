@@ -23,7 +23,7 @@ public class VideoConverterMain {
         boolean IS_MAC = lcOSName.startsWith("mac os x");
         if (IS_MAC) {
             LOG.info("video converter running on mac osx: " + System.getProperty("os.name"));
-            //System.setProperty("apple.laf.useScreenMenuBar", "true");
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
         }
         FFprobe ffprobe;
         final String ffmpegBin = "/usr/local/bin";
