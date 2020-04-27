@@ -50,7 +50,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
         TableColumnModel columnModel = table.getColumnModel();
         columnModel.getColumn(column).setCellRenderer(this);
         columnModel.getColumn(column).setCellEditor(this);
-        //table.addMouseListener(this);
+        table.addMouseListener(this);
     }
 
 
@@ -116,13 +116,14 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
     //
     public Component getTableCellRendererComponent(
             JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        if (isSelected) {
-            renderButton.setForeground(table.getSelectionForeground());
-            renderButton.setBackground(table.getSelectionBackground());
-        } else {
-            renderButton.setForeground(table.getForeground());
-            renderButton.setBackground(UIManager.getColor("Button.background"));
-        }
+        // removed caused button text to disappear
+//        if (isSelected) {
+//            renderButton.setForeground(table.getSelectionForeground());
+//            renderButton.setBackground(table.getSelectionBackground());
+//        } else {
+//            renderButton.setForeground(table.getForeground());
+//            renderButton.setBackground(UIManager.getColor("Button.background"));
+//        }
 
         if (hasFocus) {
             renderButton.setBorder(focusBorder);

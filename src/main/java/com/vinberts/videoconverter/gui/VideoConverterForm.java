@@ -101,6 +101,7 @@ public class VideoConverterForm extends JFrame {
                 ((DefaultTableModel) table.getModel()).removeRow(modelRow);
             }
         };
+        
         ButtonColumn buttonColumn = new ButtonColumn(fileListTable, delete, 5);
         buttonColumn.setMnemonic(KeyEvent.VK_R);
 
