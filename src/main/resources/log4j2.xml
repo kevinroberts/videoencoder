@@ -11,7 +11,7 @@
     <Loggers>
         <Root level="debug">
             <AppenderRef ref="Console" />
-            <AppenderRef ref="Audit"/>
+<!--            <AppenderRef ref="Audit"/>-->
         </Root>
     </Loggers>
 </Configuration>

@@ -5,7 +5,7 @@ plugins {
 group 'com.vinberts'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 1.11
 
 repositories {
     mavenCentral()
@@ -13,6 +13,8 @@ repositories {
 }
 
 dependencies {
+    // JAFFREE [Ja]va [ff]mpeg and [ff]probe [free] command line wrapper
+    compile group: 'com.github.kokorin.jaffree', name: 'jaffree', version: '0.9.4'
     // required for Intellij GUI Form builder
     compile name: 'forms_rt', version: '13.1.1'
     // SLF4J as a facade over Log4j2 required dependencies
