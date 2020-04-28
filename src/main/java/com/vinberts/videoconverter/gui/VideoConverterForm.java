@@ -6,6 +6,7 @@ import com.intellij.uiDesigner.core.Spacer;
 import com.vinberts.videoconverter.gui.actions.ClearTableAction;
 import com.vinberts.videoconverter.gui.actions.FileEncodeAction;
 import com.vinberts.videoconverter.gui.actions.FileOpenAction;
+import com.vinberts.videoconverter.gui.actions.OpenPreferencesAction;
 import com.vinberts.videoconverter.gui.helpers.ButtonColumn;
 import com.vinberts.videoconverter.gui.helpers.FileListTableModel;
 import com.vinberts.videoconverter.gui.helpers.MessageWithLink;
@@ -44,6 +45,8 @@ public class VideoConverterForm extends JFrame {
         $$$setupUI$$$();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(mainPanel);
+        JFrame preferencesFrame = new VideoConverterPreferences("Video Converter Preferences");
+        preferencesFrame.setMinimumSize(new Dimension(583, 400));
 
         mainMenu = new JMenuBar();
 
@@ -53,6 +56,7 @@ public class VideoConverterForm extends JFrame {
         // Create menu items
         JMenuItem aboutMenuItem = new JMenuItem("About Video Converter");
         JMenuItem openMenuItem = new JMenuItem("Open");
+        JMenuItem preferencesMenuItem = new JMenuItem("Preferences");
         JMenuItem clearMenuItem = new JMenuItem("Clear all");
         JMenuItem exitMenuItem = new JMenuItem("Quit");
 
@@ -78,10 +82,18 @@ public class VideoConverterForm extends JFrame {
         clearMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
                 Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
 
+        preferencesMenuItem.setToolTipText("Change video converter preferences");
+        preferencesMenuItem.addActionListener(new OpenPreferencesAction(preferencesFrame));
+        preferencesMenuItem.setMnemonic(KeyEvent.VK_COMMA);
+        preferencesMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_COMMA,
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+
         fileMenu.add(aboutMenuItem);
+        fileMenu.add(preferencesMenuItem);
         fileMenu.add(openMenuItem);
         fileMenu.add(clearMenuItem);
         fileMenu.add(exitMenuItem);
+
 
         mainMenu.add(fileMenu);
 

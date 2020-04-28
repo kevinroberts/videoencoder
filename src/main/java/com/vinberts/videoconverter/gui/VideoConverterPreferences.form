@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.vinberts.videoconverter.gui.VideoConverterPreferences">
+  <grid id="27dc6" binding="mainPanel" layout-manager="FormLayout">
+    <rowspec value="center:d:noGrow"/>
+    <rowspec value="top:3dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:3dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <colspec value="fill:d:noGrow"/>
+    <colspec value="left:4dlu:noGrow"/>
+    <colspec value="fill:max(d;4px):noGrow"/>
+    <colspec value="left:4dlu:noGrow"/>
+    <colspec value="fill:max(d;4px):noGrow"/>
+    <constraints>
+      <xy x="20" y="20" width="600" height="400"/>
+    </constraints>
+    <properties>
+      <minimumSize width="600" height="65"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="a6478" class="javax.swing.JLabel" binding="ffmpegPathLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms top="0" left="2" bottom="0" right="0"/>
+        </constraints>
+        <properties>
+          <text value="Path to FFMPEG installation:"/>
+        </properties>
+      </component>
+      <component id="516d7" class="javax.swing.JLabel" binding="ffmpegPathValueLabel" custom-create="true">
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <focusable value="true"/>
+          <foreground color="-12961222"/>
+        </properties>
+      </component>
+      <component id="58a1a" class="javax.swing.JButton" binding="setFFMPEGPathButton">
+        <constraints>
+          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Set FFMPEG Path..."/>
+        </properties>
+      </component>
+      <component id="60cf" class="javax.swing.JLabel" binding="pathToConvertedLabel">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms top="0" left="2" bottom="0" right="0"/>
+        </constraints>
+        <properties>
+          <preferredSize width="198" height="17"/>
+          <text value="Path to store converted videos:"/>
+        </properties>
+      </component>
+      <component id="d6953" class="javax.swing.JLabel" binding="pathToConvertedValueLabel" custom-create="true">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <autoscrolls value="true"/>
+          <background color="-328193"/>
+          <foreground color="-12961222"/>
+          <opaque value="false"/>
+        </properties>
+      </component>
+      <component id="cb40e" class="javax.swing.JButton" binding="setPathToConvertedButton">
+        <constraints>
+          <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Set Converted Folder..."/>
+        </properties>
+      </component>
+      <component id="add0a" class="javax.swing.JButton" binding="applyButton" custom-create="true">
+        <constraints>
+          <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms top="5" left="0" bottom="0" right="0"/>
+        </constraints>
+        <properties>
+          <margin top="0" left="0" bottom="0" right="0"/>
+          <text value="Close"/>
+          <verticalAlignment value="0"/>
+          <verticalTextPosition value="0"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

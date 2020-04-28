@@ -19,6 +19,8 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
     // required for Intellij GUI Form builder
     compile name: 'forms_rt', version: '13.1.1'
+    // https://mvnrepository.com/artifact/com.jgoodies/jgoodies-forms
+    compile group: 'com.jgoodies', name: 'jgoodies-forms', version: '1.6.0'
     // SLF4J as a facade over Log4j2 required dependencies
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.0'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.0'
