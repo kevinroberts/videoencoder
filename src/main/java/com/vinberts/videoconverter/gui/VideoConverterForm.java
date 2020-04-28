@@ -4,11 +4,13 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import com.vinberts.videoconverter.gui.actions.ClearTableAction;
+import com.vinberts.videoconverter.gui.actions.FileEncodeAction;
 import com.vinberts.videoconverter.gui.actions.FileOpenAction;
 import com.vinberts.videoconverter.gui.helpers.ButtonColumn;
 import com.vinberts.videoconverter.gui.helpers.FileListTableModel;
 import com.vinberts.videoconverter.gui.helpers.MessageWithLink;
 import com.vinberts.videoconverter.gui.helpers.ProgressRenderer;
+import com.vinberts.videoconverter.utils.TableUtils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -21,7 +23,7 @@ import java.awt.event.KeyEvent;
 import static com.vinberts.videoconverter.utils.Constants.ABOUT_TEXT;
 import static com.vinberts.videoconverter.utils.Constants.H265_MKV_1080P;
 import static com.vinberts.videoconverter.utils.Constants.H265_MKV_720P;
-import static com.vinberts.videoconverter.utils.Constants.MAX;
+import static com.vinberts.videoconverter.utils.Constants.MAX_PROGRESS;
 
 /**
  *
@@ -85,6 +87,7 @@ public class VideoConverterForm extends JFrame {
 
         // button actions
         openButton.addActionListener(new FileOpenAction(fileListTable));
+        startEncodeButton.addActionListener(new FileEncodeAction(fileListTable));
 
         // table actions
 
@@ -107,7 +110,7 @@ public class VideoConverterForm extends JFrame {
         ButtonColumn buttonColumn = new ButtonColumn(fileListTable, delete, 5);
         buttonColumn.setMnemonic(KeyEvent.VK_R);
 
-        fileListTable.setDefaultRenderer(Integer.class, new ProgressRenderer(0, MAX));
+        fileListTable.setDefaultRenderer(Integer.class, new ProgressRenderer(0, MAX_PROGRESS));
 
         this.setJMenuBar(mainMenu);
 
@@ -178,7 +181,7 @@ public class VideoConverterForm extends JFrame {
     private void createUIComponents() {
 
         String[] columns = new String[]{
-                "File name", "Duration (sec)", "Video Codec", "Re-Encode Option", "Encode Progress", "Actions"
+                "File name", "Duration (sec)", "Video Codec", "Re-Encode Option", "Encode Progress", "Actions", ""
         };
         Object[][] data = new Object[][]{};
 
@@ -187,6 +190,11 @@ public class VideoConverterForm extends JFrame {
         JTableHeader tableHeader = fileListTable.getTableHeader();
         tableHeader.setFont(new Font("Serif", Font.PLAIN, 16));
         fileListTable.setRowHeight(30);
+        TableUtils.setJTableColumnsWidth(fileListTable, 950, 30, 11, 10, 19, 20, 10, 0);
+        // hide video file col
+        fileListTable.getColumnModel().getColumn(6).setWidth(0);
+        fileListTable.getColumnModel().getColumn(6).setMinWidth(0);
+        fileListTable.getColumnModel().getColumn(6).setMaxWidth(0);
         fileListPane = new JScrollPane(fileListTable);
     }
 }

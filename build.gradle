@@ -15,6 +15,8 @@ repositories {
 dependencies {
     // JAFFREE [Ja]va [ff]mpeg and [ff]probe [free] command line wrapper
     compile group: 'com.github.kokorin.jaffree', name: 'jaffree', version: '0.9.4'
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
     // required for Intellij GUI Form builder
     compile name: 'forms_rt', version: '13.1.1'
     // SLF4J as a facade over Log4j2 required dependencies

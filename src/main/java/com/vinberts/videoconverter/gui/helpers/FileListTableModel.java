@@ -1,13 +1,14 @@
 package com.vinberts.videoconverter.gui.helpers;
 
 import javax.swing.table.DefaultTableModel;
+import java.io.File;
 
 /**
  *
  */
 public class FileListTableModel extends DefaultTableModel {
     private final Class[] columnClass = new Class[]{
-            String.class, Long.class, String.class, String.class, Integer.class, String.class
+            String.class, Long.class, String.class, String.class, Integer.class, String.class, File.class
     };
 
     public FileListTableModel(final Object[][] data, final Object[] columnNames) {

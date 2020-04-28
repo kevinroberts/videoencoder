@@ -1,5 +1,9 @@
 package com.vinberts.videoconverter.gui.actions;
 
+import com.github.kokorin.jaffree.StreamType;
+import com.github.kokorin.jaffree.ffprobe.FFprobeResult;
+import com.github.kokorin.jaffree.ffprobe.Stream;
+import com.vinberts.videoconverter.utils.impl.FFMpegProperImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import static com.vinberts.videoconverter.utils.Constants.H265_MKV_1080P;
 
@@ -19,6 +25,7 @@ import static com.vinberts.videoconverter.utils.Constants.H265_MKV_1080P;
 public class FileOpenAction implements ActionListener {
     private static final Logger LOG = LoggerFactory.getLogger(FileOpenAction.class);
     private JTable fileListTable;
+    private FFMpegProperImpl ffMpegProper = new FFMpegProperImpl();
 
     public FileOpenAction(final JTable fileListTable) {
         this.fileListTable = fileListTable;
@@ -53,7 +60,23 @@ public class FileOpenAction implements ActionListener {
             while (t++ < files.length) {
                 File file = files[t - 1];
                 filesChosen.append(file.getAbsolutePath()).append(",");
-                model.addRow(new Object[]{file.getName(), 10L, "h.264", H265_MKV_1080P, 0, "Remove"});
+                FFprobeResult result = ffMpegProper.getProbeResultForVideoFile(file);
+                Long duration = 0L;
+                String codecName = "UNKNOWN";
+                for (Stream stream : result.getStreams()) {
+                    if (stream.getCodecType().equals(StreamType.VIDEO)) {
+                        codecName = stream.getCodecName();
+                        duration = stream.getDuration(TimeUnit.SECONDS);
+                    }
+                }
+                if (Objects.isNull(duration) || duration == 0L) {
+                    for (Stream stream : result.getStreams()) {
+                        if (Objects.nonNull(stream.getDuration())) {
+                            duration = stream.getDuration(TimeUnit.SECONDS);
+                        }
+                    }
+                }
+                model.addRow(new Object[]{file.getName(), duration, codecName, H265_MKV_1080P, 0, "Remove", file});
             }
 
             LOG.debug("User chose files: " + filesChosen.toString());
