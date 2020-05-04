@@ -2,6 +2,7 @@ package com.vinberts.videoconverter.utils;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
+import java.time.Duration;
 
 /**
  *
@@ -20,4 +21,12 @@ public class TableUtils {
                     (tablePreferredWidth * (percentages[i] / total)));
         }
     }
+
+    public static String humanReadableDuration(Duration duration) {
+        return duration.toString()
+                .substring(2)
+                .replaceAll("(\\d[HMS])(?!$)", "$1 ")
+                .toLowerCase();
+    }
+
 }

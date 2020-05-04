@@ -8,7 +8,7 @@ import java.io.File;
  */
 public class FileListTableModel extends DefaultTableModel {
     private final Class[] columnClass = new Class[]{
-            String.class, Long.class, String.class, String.class, Integer.class, String.class, File.class
+            String.class, String.class, String.class, String.class, Integer.class, String.class, File.class
     };
 
     public FileListTableModel(final Object[][] data, final Object[] columnNames) {

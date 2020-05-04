@@ -14,6 +14,7 @@ import com.vinberts.videoconverter.gui.helpers.ProgressRenderer;
 import com.vinberts.videoconverter.utils.TableUtils;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellEditor;
@@ -34,10 +35,10 @@ public class VideoConverterForm extends JFrame {
     private JPanel mainPanel;
     private JMenuBar mainMenu;
     private JButton startEncodeButton;
-    private JButton pauseButton;
     private JButton openButton;
     private JTable fileListTable;
     private JScrollPane fileListPane;
+    private JLabel loadingIndicator;
 
 
     public VideoConverterForm(final String title) throws HeadlessException {
@@ -47,7 +48,7 @@ public class VideoConverterForm extends JFrame {
         this.setContentPane(mainPanel);
         JFrame preferencesFrame = new VideoConverterPreferences("Video Converter Preferences");
         preferencesFrame.setMinimumSize(new Dimension(583, 400));
-
+        loadingIndicator.setVisible(false);
         mainMenu = new JMenuBar();
 
         JMenu fileMenu = new JMenu("File");
@@ -65,7 +66,7 @@ public class VideoConverterForm extends JFrame {
         openMenuItem.setToolTipText("Open video source files");
         openMenuItem.setMnemonic(KeyEvent.VK_O);
         // change to file opener
-        openMenuItem.addActionListener(new FileOpenAction(fileListTable));
+        openMenuItem.addActionListener(new FileOpenAction(fileListTable, loadingIndicator));
         openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
                 Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
 
@@ -98,7 +99,7 @@ public class VideoConverterForm extends JFrame {
         mainMenu.add(fileMenu);
 
         // button actions
-        openButton.addActionListener(new FileOpenAction(fileListTable));
+        openButton.addActionListener(new FileOpenAction(fileListTable, loadingIndicator));
         startEncodeButton.addActionListener(new FileEncodeAction(fileListTable));
 
         // table actions
@@ -140,18 +141,14 @@ public class VideoConverterForm extends JFrame {
     private void $$$setupUI$$$() {
         createUIComponents();
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayoutManager(2, 5, new Insets(0, 0, 0, 0), -1, -1));
-        mainPanel.setBorder(BorderFactory.createTitledBorder(""));
+        mainPanel.setLayout(new GridLayoutManager(2, 6, new Insets(0, 0, 0, 0), -1, -1));
+        mainPanel.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         startEncodeButton = new JButton();
         startEncodeButton.setIcon(new ImageIcon(getClass().getResource("/play-circle.png")));
         startEncodeButton.setText("Start Encode");
         mainPanel.add(startEncodeButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         mainPanel.add(spacer1, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, new Dimension(50, -1), 1, false));
-        pauseButton = new JButton();
-        pauseButton.setIcon(new ImageIcon(getClass().getResource("/pause-circle.png")));
-        pauseButton.setText("Pause");
-        mainPanel.add(pauseButton, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
         mainPanel.add(spacer2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         openButton = new JButton();
@@ -161,7 +158,14 @@ public class VideoConverterForm extends JFrame {
         fileListPane.setEnabled(true);
         Font fileListPaneFont = this.$$$getFont$$$(null, -1, -1, fileListPane.getFont());
         if (fileListPaneFont != null) fileListPane.setFont(fileListPaneFont);
-        mainPanel.add(fileListPane, new GridConstraints(1, 0, 1, 5, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        mainPanel.add(fileListPane, new GridConstraints(1, 0, 1, 6, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        loadingIndicator = new JLabel();
+        loadingIndicator.setEnabled(true);
+        loadingIndicator.setHorizontalAlignment(2);
+        loadingIndicator.setHorizontalTextPosition(11);
+        loadingIndicator.setIcon(new ImageIcon(getClass().getResource("/spinner.gif")));
+        loadingIndicator.setText("Loading");
+        mainPanel.add(loadingIndicator, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -193,7 +197,7 @@ public class VideoConverterForm extends JFrame {
     private void createUIComponents() {
 
         String[] columns = new String[]{
-                "File name", "Duration (sec)", "Video Codec", "Re-Encode Option", "Encode Progress", "Actions", ""
+                "File name", "Duration", "Video Codec", "Re-Encode Option", "Encode Progress", "Actions", ""
         };
         Object[][] data = new Object[][]{};
 
