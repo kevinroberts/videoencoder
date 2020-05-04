@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -26,13 +27,24 @@ public class MessageWithLink extends JEditorPane {
                 if (e.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
                     // Process the click event on the link with java.awt.Desktop.getDesktop().browse())
                     LOG.debug(e.getURL() + " was clicked");
-                    if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                        try {
-                            Desktop.getDesktop().browse(e.getURL().toURI());
-                        } catch (IOException ex) {
-                            LOG.error("IOException occurred", ex);
-                        } catch (URISyntaxException ex) {
-                            LOG.error("URIException occurred ", ex);
+                    if (e.getURL().getProtocol().startsWith("http")) {
+                        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                            try {
+                                Desktop.getDesktop().browse(e.getURL().toURI());
+                            } catch (IOException ex) {
+                                LOG.error("IOException occurred", ex);
+                            } catch (URISyntaxException ex) {
+                                LOG.error("URIException occurred ", ex);
+                            }
+                        }
+                    } else if (e.getURL().getProtocol().startsWith("file")) {
+                        LOG.debug("opening file link: " + e.getURL().getPath());
+                        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE_FILE_DIR)) {
+                            try {
+                                Desktop.getDesktop().open(new File(e.getURL().getPath()));
+                            } catch (IOException ex) {
+                                LOG.error("IOException occurred", ex);
+                            }
                         }
                     }
                 }

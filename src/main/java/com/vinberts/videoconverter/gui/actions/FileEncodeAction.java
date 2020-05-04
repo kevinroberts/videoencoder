@@ -20,6 +20,9 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicLong;
 
+import static com.vinberts.videoconverter.utils.Constants.H265_MKV_CONTAINER;
+import static com.vinberts.videoconverter.utils.Constants.H265_MKV_FLIP_180;
+
 /**
  *
  */
@@ -28,6 +31,7 @@ public class FileEncodeAction implements ActionListener {
     private JTable fileListTable;
     private Thread encodeThread;
     private final int percentCol = 4;
+    private final int encodeOptionCol = 3;
 
     public FileEncodeAction(final JTable fileListTable) {
         this.fileListTable = fileListTable;
@@ -91,19 +95,34 @@ public class FileEncodeAction implements ActionListener {
                                             }
                                         }
                                     };
+                                    String encodeOption = (String) model.getValueAt(row, encodeOptionCol);
                                     String encodedFilePath = System.getProperty("ENCODER_PATH") + "/" +
                                             FilenameUtils.removeExtension(videoFile.getName())
                                             + ".mkv";
+
                                     try {
-                                        FFmpegResult result = FFmpeg.atPath(Paths.get(System.getProperty("FFMPEG_PATH")))
+                                        FFmpeg encodeTask = FFmpeg.atPath(Paths.get(System.getProperty("FFMPEG_PATH")))
                                                 .addInput(UrlInput.fromPath(Paths.get(videoFile.getAbsolutePath())))
-                                                .addOutput(UrlOutput.toPath(Paths.get(encodedFilePath))
+                                                .setProgressListener(listener)
+                                                .setOverwriteOutput(true);
+                                        switch (encodeOption) {
+                                            case H265_MKV_CONTAINER:
+                                                encodeTask.addOutput(UrlOutput.toPath(Paths.get(encodedFilePath))
                                                         .addArguments("-vcodec", "libx265")
                                                         .addArguments("-threads", "0")
-                                                        .addArguments("-acodec", "copy"))
-                                                .setProgressListener(listener)
-                                                .setOverwriteOutput(true)
-                                                .execute();
+                                                        .addArguments("-acodec", "copy")).execute();
+                                                break;
+                                            case H265_MKV_FLIP_180:
+                                                encodeTask.addOutput(UrlOutput.toPath(Paths.get(encodedFilePath))
+                                                        .addArguments("-vcodec", "libx265")
+                                                        .addArguments("-threads", "0")
+                                                        .addArguments("-vf", "transpose=2,transpose=2")
+                                                        .addArguments("-acodec", "copy")).execute();
+                                                break;
+                                            default:
+                                                LOG.info("No valid option selected");
+                                                break;
+                                        }
                                     } catch (Exception exception) {
                                         LOG.error("Encoding interrupted occurred", exception);
                                         // reset progress for current item to (0) zero percent
@@ -117,7 +136,9 @@ public class FileEncodeAction implements ActionListener {
                                 done = true;
                                 source.setText("Start encode");
                                 source.setIcon(new ImageIcon(getClass().getResource("/play-circle.png")));
-                                JOptionPane.showMessageDialog(fileListTable, new MessageWithLink("Encoding is done!"));
+                                String message = String.format("Encoding is done! <br><br><a href=\"file://%s\">Open encode folder</a>",
+                                        System.getProperty("ENCODER_PATH"));
+                                JOptionPane.showMessageDialog(fileListTable, new MessageWithLink(message));
                             }
                         }
                     }

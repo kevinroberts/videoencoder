@@ -18,7 +18,7 @@ import java.time.Duration;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import static com.vinberts.videoconverter.utils.Constants.H265_MKV_1080P;
+import static com.vinberts.videoconverter.utils.Constants.H265_MKV_CONTAINER;
 import static com.vinberts.videoconverter.utils.TableUtils.humanReadableDuration;
 
 /**
@@ -89,7 +89,7 @@ public class FileOpenAction implements ActionListener {
                             humanDuration = humanReadableDuration(Duration.ofSeconds(duration));
                         }
 
-                        model.addRow(new Object[]{file.getName(), humanDuration, codecName, H265_MKV_1080P, 0, "Remove", file});
+                        model.addRow(new Object[]{file.getName(), humanDuration, codecName, H265_MKV_CONTAINER, 0, "Remove", file});
                     }
 
                     LOG.debug("User chose files: " + filesChosen.toString());

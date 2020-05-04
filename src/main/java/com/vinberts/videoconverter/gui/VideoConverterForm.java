@@ -23,8 +23,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import static com.vinberts.videoconverter.utils.Constants.ABOUT_TEXT;
-import static com.vinberts.videoconverter.utils.Constants.H265_MKV_1080P;
-import static com.vinberts.videoconverter.utils.Constants.H265_MKV_720P;
+import static com.vinberts.videoconverter.utils.Constants.H265_MKV_CONTAINER;
+import static com.vinberts.videoconverter.utils.Constants.H265_MKV_FLIP_180;
 import static com.vinberts.videoconverter.utils.Constants.MAX_PROGRESS;
 
 /**
@@ -105,7 +105,7 @@ public class VideoConverterForm extends JFrame {
         // table actions
 
         //set encoding options
-        Object options[] = {H265_MKV_1080P, H265_MKV_720P};
+        Object options[] = {H265_MKV_CONTAINER, H265_MKV_FLIP_180};
         JComboBox comboBox = new JComboBox(options);
         comboBox.setMaximumRowCount(4);
         TableCellEditor editor = new DefaultCellEditor(comboBox);
