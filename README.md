@@ -9,7 +9,7 @@ Build
 ===========
 * [clone the Video Converter repository](https://help.github.com/articles/cloning-a-repository/)      
 * run one of the following commands from the project root:  
-**Build and install the jars in the local repository executing all the unit test:**   
+**Build and install the jars in the local repository executing all the unit tests:**   
 `./gradlew build`
 or
 `./gradlew run` to run / debug    
