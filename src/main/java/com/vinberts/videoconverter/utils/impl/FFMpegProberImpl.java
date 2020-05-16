@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 /**
  *
  */
-public class FFMpegProperImpl implements FFMpegProber {
+public class FFMpegProberImpl implements FFMpegProber {
 
     @Override
     public FFprobeResult getProbeResultForVideoFile(final File file) {

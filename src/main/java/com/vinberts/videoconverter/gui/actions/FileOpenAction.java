@@ -3,7 +3,7 @@ package com.vinberts.videoconverter.gui.actions;
 import com.github.kokorin.jaffree.StreamType;
 import com.github.kokorin.jaffree.ffprobe.FFprobeResult;
 import com.github.kokorin.jaffree.ffprobe.Stream;
-import com.vinberts.videoconverter.utils.impl.FFMpegProperImpl;
+import com.vinberts.videoconverter.utils.impl.FFMpegProberImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ public class FileOpenAction implements ActionListener {
     private static final Logger LOG = LoggerFactory.getLogger(FileOpenAction.class);
     private JTable fileListTable;
     private JLabel fileLoadingIndicator;
-    private FFMpegProperImpl ffMpegProper = new FFMpegProperImpl();
+    private FFMpegProberImpl ffMpegProper = new FFMpegProberImpl();
 
     public FileOpenAction(final JTable fileListTable, final JLabel fileLoadingIndicator) {
         this.fileListTable = fileListTable;
