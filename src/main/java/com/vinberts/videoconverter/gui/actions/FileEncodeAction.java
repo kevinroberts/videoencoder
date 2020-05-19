@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import static com.vinberts.videoconverter.utils.Constants.H265_MKV_CONTAINER;
 import static com.vinberts.videoconverter.utils.Constants.H265_MKV_FLIP_180;
+import static com.vinberts.videoconverter.utils.Constants.H265_MKV_SKIP_FIRST_AUDIO;
 
 /**
  *
@@ -110,19 +111,30 @@ public class FileEncodeAction implements ActionListener {
                                                 encodeTask.addOutput(UrlOutput.toPath(Paths.get(encodedFilePath))
                                                         .addArguments("-vcodec", "libx265")
                                                         .addArguments("-threads", "0")
-                                                        .addArguments("-acodec", "copy")).execute();
+                                                        .addArguments("-acodec", "copy"));
                                                 break;
                                             case H265_MKV_FLIP_180:
                                                 encodeTask.addOutput(UrlOutput.toPath(Paths.get(encodedFilePath))
                                                         .addArguments("-vcodec", "libx265")
                                                         .addArguments("-threads", "0")
                                                         .addArguments("-vf", "transpose=2,transpose=2")
-                                                        .addArguments("-acodec", "copy")).execute();
+                                                        .addArguments("-acodec", "copy"));
+                                                break;
+                                            case H265_MKV_SKIP_FIRST_AUDIO:
+                                                encodeTask.addOutput(UrlOutput.toPath(Paths.get(encodedFilePath))
+                                                        .addArguments("-vcodec", "libx265")
+                                                        .addArguments("-threads", "0")
+                                                        .addArguments("-map", "0")
+                                                        .addArguments("-map", "0:s")
+                                                        .addArguments("-map", "0:m:language:eng"));
                                                 break;
                                             default:
                                                 LOG.info("No valid option selected");
+                                                encodeTask.addOutput(UrlOutput.toPath(Paths.get(encodedFilePath))
+                                                        .addArguments("-vcodec", "copy"));
                                                 break;
                                         }
+                                        encodeTask.execute();
                                     } catch (Exception exception) {
                                         LOG.error("Encoding interrupted occurred", exception);
                                         // reset progress for current item to (0) zero percent

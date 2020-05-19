@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * FFMPEG options list:
@@ -20,6 +21,14 @@ public class VideoConverterMain {
         // load system properties - FFMPEG path
         GetPropertyValues properties = new GetPropertyValues();
         properties.getPropValues();
+
+        try {
+            URL iconURL = VideoConverterMain.class.getResource("/play-circle.png");
+            Image image = new ImageIcon(iconURL).getImage();
+            Taskbar.getTaskbar().setIconImage(image);
+        } catch (Exception e) {
+            LOG.error("Could not set APP icon", e);
+        }
 
         String lcOSName = System.getProperty("os.name").toLowerCase();
         boolean IS_MAC = lcOSName.startsWith("mac os x");

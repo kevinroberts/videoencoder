@@ -25,6 +25,7 @@ import java.awt.event.KeyEvent;
 import static com.vinberts.videoconverter.utils.Constants.ABOUT_TEXT;
 import static com.vinberts.videoconverter.utils.Constants.H265_MKV_CONTAINER;
 import static com.vinberts.videoconverter.utils.Constants.H265_MKV_FLIP_180;
+import static com.vinberts.videoconverter.utils.Constants.H265_MKV_SKIP_FIRST_AUDIO;
 import static com.vinberts.videoconverter.utils.Constants.MAX_PROGRESS;
 
 /**
@@ -62,7 +63,6 @@ public class VideoConverterForm extends JFrame {
         JMenuItem exitMenuItem = new JMenuItem("Quit");
 
         aboutMenuItem.addActionListener((event) -> JOptionPane.showMessageDialog(this, new MessageWithLink(ABOUT_TEXT)));
-
         openMenuItem.setToolTipText("Open video source files");
         openMenuItem.setMnemonic(KeyEvent.VK_O);
         // change to file opener
@@ -105,7 +105,7 @@ public class VideoConverterForm extends JFrame {
         // table actions
 
         //set encoding options
-        Object options[] = {H265_MKV_CONTAINER, H265_MKV_FLIP_180};
+        Object options[] = {H265_MKV_CONTAINER, H265_MKV_FLIP_180, H265_MKV_SKIP_FIRST_AUDIO};
         JComboBox comboBox = new JComboBox(options);
         comboBox.setMaximumRowCount(4);
         TableCellEditor editor = new DefaultCellEditor(comboBox);

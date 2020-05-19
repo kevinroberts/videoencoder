@@ -36,6 +36,9 @@ dependencies {
 application {
     mainClassName = 'com.vinberts.videoconverter.VideoConverterMain'
 }
+task createStartScripts(type: CreateStartScripts) {
+    applicationName = 'Video Converter'
+}
 
 jar {
     manifest {
